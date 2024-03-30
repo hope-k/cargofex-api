@@ -7,7 +7,7 @@ from decouple import config
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # Override common settings
-DEBUG = False
+DEBUG = True
 # Add your production domain to ALLOWED_HOSTS
 ALLOWED_HOSTS = ["*"]
 CORS_ALLOWED_ORIGINS = ["https://cargofex.vercel.app", "https://cargofex.com", "https://www.cargofex.com", "https://www.cargofex.vercel.app"]
