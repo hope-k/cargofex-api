@@ -36,3 +36,9 @@ CLOUDINARY_STORAGE = {
     "API_SECRET": config("CLOUDINARY_API_SECRET"),
     "SECURE": True,
 }
+
+# static files in src folder
+
+STATIC_ROOT = BASE_DIR / "static"
+MEDIA_ROOT = BASE_DIR / "media"
+STATIC_URL = "static/"
