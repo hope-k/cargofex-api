@@ -2,13 +2,12 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from decouple import config
 
 
 def main():
     """Run administrative tasks."""
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", (
-        "courier.production" if config("PRODUCTION") == "True" else
+        "courier.production" if os.environ.get("PRODUCTION") == "True" else
         "courier.development"
     
     ))
