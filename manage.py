@@ -8,8 +8,8 @@ from decouple import config
 def main():
     """Run administrative tasks."""
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", (
-        "courier.settings.production" if config("PRODUCTION") == "True" else
-        "courier.settings.development"
+        "courier.production" if config("PRODUCTION") == "True" else
+        "courier.development"
     
     ))
     try:

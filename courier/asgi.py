@@ -15,9 +15,9 @@ from django.core.asgi import get_asgi_application
 os.environ.setdefault(
     "DJANGO_SETTINGS_MODULE",
     (
-        "courier.settings.production"
+        "courier.production"
         if config("PRODUCTION") == "True"
-        else "courier.settings.development"
+        else "courier.development"
     ),
 )
 application = get_asgi_application()
