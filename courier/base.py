@@ -90,7 +90,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "courier.wsgi.application"
+WSGI_APPLICATION = "courier.wsgi.app"
 
 
 # Database
