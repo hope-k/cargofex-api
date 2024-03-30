@@ -3,7 +3,7 @@
 pip install -r requirements.txt
 
 # Convert static asset files
-python3.12 manage.py collectstatic --no-input
+python3.9 manage.py collectstatic --no-input
 
 # Apply any outstanding database migrations
-python3.12 manage.py migrate
+python3.9 manage.py migrate
