@@ -1,6 +1,8 @@
 # settings/dev.py
 
 from .base import *
+from decouple import config
+
 
 # Override common settings
 DEBUG = True
