@@ -15,7 +15,7 @@ CORS_ALLOWED_ORIGINS = ["https://cargofex.vercel.app", "https://cargofex.com", "
 # Set up static and media file serving
 STATIC_ROOT = BASE_DIR / 'static'
 MEDIA_ROOT = BASE_DIR / 'media'
-STATIC_URL = "static/"
+STATIC_URL = BASE_DIR / "static/"
 
 # Set up the database
 DATABASES = {
