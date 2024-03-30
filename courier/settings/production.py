@@ -10,12 +10,17 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = True
 # Add your production domain to ALLOWED_HOSTS
 ALLOWED_HOSTS = ["*"]
-CORS_ALLOWED_ORIGINS = ["https://cargofex.vercel.app", "https://cargofex.com", "https://www.cargofex.com", "https://www.cargofex.vercel.app"]
+CORS_ALLOWED_ORIGINS = [
+    "https://cargofex.vercel.app",
+    "https://cargofex.com",
+    "https://www.cargofex.com",
+    "https://www.cargofex.vercel.app",
+]
 
 # Set up static and media file serving
-STATIC_ROOT = BASE_DIR / 'static'
-MEDIA_ROOT = BASE_DIR / 'media'
-STATIC_URL = BASE_DIR / "static/"
+STATIC_ROOT = BASE_DIR / "static"
+MEDIA_ROOT = BASE_DIR / "media"
+STATIC_URL = "static"
 
 # Set up the database
 DATABASES = {
@@ -35,4 +40,3 @@ CLOUDINARY_STORAGE = {
     "API_SECRET": config("CLOUDINARY_API_SECRET"),
     "SECURE": True,
 }
-
