@@ -185,3 +185,27 @@ class NotificationAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return qs
         return qs.filter(shipment__manager=request.user)
+    
+@admin.register(models.AdditionalInfo)
+class AdditionalInfoAdmin(admin.ModelAdmin):
+    list_display = ("full_name", "phone", "address", "company", "job_title")
+    search_fields = ("full_name", "phone", "address", "company", "job_title")
+    search_help_text = "Search by Full Name, Phone, Address, Company or Job Title"
+    list_filter = ("company", "job_title")
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(user=request.user)
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        form.base_fields["full_name"].help_text = "Enter the full name of the user."
+        form.base_fields["phone"].help_text = "Enter the phone number of the user."
+        form.base_fields["address"].help_text = "Enter the address of the user."
+        form.base_fields["company"].help_text = "Enter the company of the user."
+        form.base_fields["job_title"].help_text = "Enter the job title of the user."
+        return form
+    
+
