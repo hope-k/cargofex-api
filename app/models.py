@@ -63,7 +63,9 @@ class Location(models.Model):
     latitude = models.FloatField(
         help_text="Get the latitude and longitude from Google Maps - gps-coordinates.net"
     )
-    longitude = models.FloatField()
+    longitude = models.FloatField(
+        help_text="Make sure  your coordinates are valid as it will be used for the map."
+    )
 
     class Meta:
         unique_together = ("latitude", "longitude")
@@ -116,7 +118,7 @@ class Shipment(models.Model):
         null=True,
         help_text=(
             "The user controlling this package from admin panel.\n"
-            "Contact Super Admin to assign you as a manager for the package you're creating if you're not assigned as a manager already."
+            "This will automatically be set as you"
         ),
     )
     created_at = models.DateTimeField(auto_now_add=True)

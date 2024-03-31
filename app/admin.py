@@ -1,4 +1,7 @@
+from typing import Any
 from django.contrib import admin
+from django.db.models.query import QuerySet
+from django.http.request import HttpRequest
 from users.models import User
 from django.contrib.auth.admin import UserAdmin
 from . import models
@@ -22,6 +25,14 @@ class AuthUserAdmin(UserAdmin):
     list_filter = ("is_staff", "is_active")
     search_fields = ("username", "email", "first_name", "last_name")
     ordering = ("username",)
+    
+    def get_queryset(self, request):
+        query_set = super().get_queryset(request)
+        if request.user.is_superuser:
+            return query_set
+        return query_set.filter(id=request.user.id)
+        
+       
 
 
 @admin.register(models.Tracking)

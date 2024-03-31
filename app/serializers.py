@@ -3,6 +3,12 @@ from . import models
 from users import models as user_models
 
 
+class UserAdditionalInfoSerializer(serializers.ModelSerializer):
+    #make user field hidden
+    class Meta:
+        model = user_models.AdditionalInfo
+        exclude = ["user"]
+
 
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,12 +17,21 @@ class NotificationSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    additional_info = UserAdditionalInfoSerializer(required=False)
+    password = serializers.CharField(write_only=True)
+    username = serializers.CharField(
+        required=True,
+    )
+    email = serializers.EmailField(
+        required=True,
+    )
+
     class Meta:
         model = user_models.User
-        fields = [
-            "first_name",
-            "last_name",
-        ]
+        fields = ["id", "username", "email", "additional_info", "password"]
+
+      
+        
 
 
 class ImageSerializer(serializers.ModelSerializer):

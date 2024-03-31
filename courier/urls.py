@@ -24,4 +24,5 @@ from app import views
 urlpatterns = [
     path("api/admin/", admin.site.urls),
     path("api/shipment/", views.ShipmentViewSet.as_view()),
+    path('api/auth/signup/', views.CreateUserView.as_view())
 ]
