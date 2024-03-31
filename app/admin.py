@@ -6,6 +6,7 @@ from users.models import User
 from django.contrib.auth.admin import UserAdmin
 from . import models
 from django.db.models import F, Case, When
+from users.models import AdditionalInfo
 
 admin.site.site_header = "LOGISTICS ADMIN"
 admin.site.register(models.LogisticCompany)
@@ -186,7 +187,7 @@ class NotificationAdmin(admin.ModelAdmin):
             return qs
         return qs.filter(shipment__manager=request.user)
     
-@admin.register(models.AdditionalInfo)
+@admin.register(AdditionalInfo)
 class AdditionalInfoAdmin(admin.ModelAdmin):
     list_display = ("full_name", "phone", "address", "company", "job_title")
     search_fields = ("full_name", "phone", "address", "company", "job_title")
