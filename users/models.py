@@ -16,7 +16,7 @@ class AdditionalInfo(models.Model):
   
 
     def __str__(self):
-        return self.user.full_name
+        return self.full_name
 
 
 
