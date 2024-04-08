@@ -136,12 +136,7 @@ class LocationAdmin(admin.ModelAdmin):
         )
         form.base_fields["state"].help_text = "Specify the state for the location."
         form.base_fields["country"].help_text = "Enter the country of the location."
-        form.base_fields["latitude"].help_text = (
-            "Provide the latitude coordinate for the location. Use decimal format."
-        )
-        form.base_fields["longitude"].help_text = (
-            "Provide the longitude coordinate for the location. Use decimal format."
-        )
+     
         return form
 
 
