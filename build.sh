@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Exit on error
-# set -o errexit
+set -o errexit
 
 # Modify this line as needed for your package manager (pip, poetry, etc.
-pip3 install -r requirements.txt
+python3.9 -m pip install -r requirements.txt
 
 # Convert static asset files
 python3.9 manage.py collectstatic --no-input
