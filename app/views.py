@@ -35,49 +35,44 @@ class ShipmentViewSet(APIView):
 
 
 class CreateUserView(APIView):
-    serializer_class = serializers.UserSerializer
+    """
+    Handles user signup, creating both a User and their AdditionalInfo.
+    Uses serializers EXCLUSIVELY for validation and data handling after instantiation.
+    """
+
+    # Define permission classes if needed, e.g., allow anyone to signup
+    # permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
+        """
+        Handles the POST request for user signup using serializers for validation.
+        """
+        # No preliminary checks using request.data.get() needed here anymore.
+        # Serializers will handle required fields and uniqueness if configured.
 
+        # Proceed with serializer-based processing within a transaction
         with transaction.atomic():
-            # check if username and email already exist
-            if User.objects.filter(username=request.data.get("username")).exists():
-                raise ValidationError("Username already exists")
-            if User.objects.filter(email=request.data.get("email")).exists():
-                raise ValidationError("Email already exists")
+            # 1. Handle User creation using UserSerializer
+            # Pass the request data directly.
+            # Assumes UserSerializer is configured with required=True for fields
+            # and UniqueValidators for username and email.
+            # Also assumes UserSerializer handles password hashing in its .create() method.
+            user_serializer = serializers.UserSerializer(data=request.data)
+            user_serializer.is_valid(
+                raise_exception=True
+            )  # Performs all user field validation now
+            user = user_serializer.save()  # Calls UserSerializer.create()
 
-            user_data = {
-                "username": request.data.get("username"),
-                "email": request.data.get("email"),
-                "password": request.data.get("password"),
-                "is_staff": False,
-                "is_active": True,
-                "is_superuser": False,
-            }
+            # 2. Handle AdditionalInfo creation using UserAdditionalInfoSerializer
+            # Pass the request data directly.
+            additional_info_serializer = serializers.UserAdditionalInfoSerializer(data=request.data)
+            additional_info_serializer.is_valid(
+                raise_exception=True
+            )  # Validates full_name, phone etc.
+            # Provide the newly created user instance when saving the related info.
+            additional_info_serializer.save(user=user)
 
-            user_data["password"] = make_password(user_data["password"])
-            user_serializer = serializers.UserSerializer(data=user_data)
-            user_serializer.is_valid(raise_exception=True)
-            user = user_serializer.save()
-            additional_info_data = {
-                "full_name": request.data.get("full_name"),
-                "phone": request.data.get("phone"),
-                "address": request.data.get("address"),
-                "company": request.data.get("company"),
-                "job_title": request.data.get("job_title"),
-                "user": user,
-            }
-            print(additional_info_data)
-            AdditionalInfo.objects.create(**additional_info_data)
-
-            return Response(user_serializer.data, status=status.HTTP_201_CREATED)
-
-
-# class ItemViewSet(NestedViewSetMixin, ModelViewSet):
-#     queryset = models.Item.objects.all()
-#     serializer_class = serializers.ItemSerializer
-
-
-# class TrackingViewSet(NestedViewSetMixin, ModelViewSet):
-#     queryset = models.Tracking.objects.all()
-#     serializer_class = serializers.TrackingSerializer
+            # 3. Prepare and return the response
+            # Re-serialize the created user object to send back confirmed data (excluding password)
+            response_data = user_serializer.data
+            return Response(response_data, status=status.HTTP_201_CREATED)
